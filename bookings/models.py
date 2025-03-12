@@ -47,6 +47,32 @@ class Reservation(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
+    class Meta:
+        ordering = ['-date', 'time']
+        unique_together = ['table', 'date', 'time']  # Prevent double booking
+    
     def __str__(self):
         return f"{self.user.username} - {self.date} at {self.time}"
+    
+    def clean(self):
+        # Check if reservation date is in the past
+        if self.date < timezone.now().date():
+            raise ValidationError("Reservation date cannot be in the past.")
+        
+        # Check if a user already has a reservation on the same day
+        same_day_reservations = Reservation.objects.filter(
+            user=self.user, 
+            date=self.date
+        ).exclude(pk=self.pk)
+        
+        if same_day_reservations.exists():
+            raise ValidationError("You already have a reservation for this day.")
+        
+        # Validate children information
+        if self.has_children and self.number_of_children is None:
+            raise ValidationError("Please specify the number of children.")
+        
+        # Validate disability information
+        if self.is_disabled and not self.disability_details:
+            raise ValidationError("Please provide disability accommodation details.")
     

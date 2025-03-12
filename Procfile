@@ -1,1 +1,1 @@
-web: gunicorn codestar.wsgi
+web: gunicorn restaurant_management_system.wsgi

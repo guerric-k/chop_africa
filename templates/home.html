@@ -1,0 +1,45 @@
+
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="hero-section">
+    <div class="hero-content">
+        <h1 class="display-4">CHOP AFRICA</h1>
+        <p class="lead">Taste the soul of African cuisine</p>
+        <div class="hero-words">
+            <span class="d-none d-md-inline">ELEGANCE</span>
+            <span>CULTURE</span>
+            <span class="d-none d-md-inline">CUISINE</span>
+            <span>AFRICA</span>
+        </div>
+    </div>
+</div>
+
+<div class="menu-section">
+    <h2 class="text-center mb-4">Menu</h2>
+    <div class="row justify-content-center">
+        {% for meal in featured_meals %}
+        <div class="col-md-4 col-lg-3 mb-4 menu-item">
+            <div class="menu-item-image">
+                <img src="{{ meal.image.url }}" alt="{{ meal.name }}" class="img-fluid rounded">
+            </div>
+            <h3>{{ meal.name }}</h3>
+            <p>{{ meal.description|truncatewords:20 }}</p>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="text-center">
+        <a href="{% url 'menu' %}" class="btn btn-primary menu-button">Full Menu</a>
+    </div>
+</div>
+
+<div class="contact-section">
+    <h2 class="text-center mb-4">Contact Us</h2>
+    <div class="contact-info">
+        <p><i class="fas fa-envelope"></i> email@chopafrica.com</p>
+        <p><i class="fas fa-phone"></i> +1 123 456 7890</p>
+    </div>
+</div>
+{% endblock %}

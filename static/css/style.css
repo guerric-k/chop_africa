@@ -1,6 +1,6 @@
 /* General Styles */
 body {
-    font-family: 'Lato', sans-serif; 
+    font-family: 'Your Professional Font', sans-serif; /* Replace with your font */
     color: var(--dark-color);
 }
 
@@ -40,4 +40,86 @@ body {
     align-items: center;
     text-align: center;
     color: white;
+}
+
+.hero-content h1 {
+    font-size: 4em;
+    font-weight: bold;
+}
+
+.hero-content p {
+    font-size: 1.5em;
+}
+
+.hero-words {
+    position: absolute;
+    bottom: 20px;
+    width: 100%;
+    text-align: center;
+    font-size: 1.2em;
+}
+
+.hero-words span {
+    margin: 0 10px;
+}
+
+/* Menu Section Styles */
+.menu-section {
+    padding: 50px 0;
+    background-color: var(--light-color);
+}
+
+.menu-item {
+    text-align: center;
+}
+
+.menu-item-image {
+    overflow: hidden;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.menu-item-image img {
+    transition: transform 0.3s ease;
+}
+
+.menu-item-image img:hover {
+    transform: scale(1.1);
+}
+
+.menu-button {
+    background-color: var(--primary-color);
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+.menu-button:hover {
+    background-color: darken(var(--primary-color), 10%);
+}
+
+/* Contact Section Styles */
+.contact-section {
+    padding: 50px 0;
+    text-align: center;
+}
+
+.contact-info {
+    margin-top: 20px;
+}
+
+.contact-info p {
+    margin-bottom: 10px;
+}
+
+/* Footer Styles */
+.footer {
+    padding: 20px 0;
+    text-align: center;
+    background-color: #f0f0f0;
+}
+
+.social-icons a {
+    margin: 0 10px;
+    color: var(--dark-color);
+    font-size: 1.5em;
 }

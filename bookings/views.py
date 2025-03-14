@@ -4,6 +4,7 @@ from django.contrib.auth.hashers import make_password, check_password
 from django.contrib import messages
 from django.core.paginator import Paginator
 from django.utils import timezone
+from .forms import UserRegistrationForm, LoginForm, ReservationForm
 
 # Create your views here.
 # Home view
@@ -16,6 +17,34 @@ def home_view(request):
         {'name': 'suya', 'Grilled Beef': 'Spicy grilled beef', 'image': 'images/suya.jpg'},
     ]
     return render(request, 'bookings/home.html', {'featured_meals': featured_meals})
+
+# Login view
+def login_view(request):
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            try:
+                user = User.objects.get(username=username)
+                if user.check_password(password):
+                    request.session['user_id'] = user.customer_id
+                    messages.success(request, 'Login successful!')
+                    return redirect('home')
+                else:
+                    messages.error(request, 'Invalid password.')
+            except User.DoesNotExist:
+                messages.error(request, 'User not found.')
+    else:
+        form = LoginForm()
+    return render(request, 'bookings/login.html', {'form': form})
+
+# Logout view
+def logout_view(request):
+    if 'user_id' in request.session:
+        del request.session['user_id']
+        messages.success(request, 'Logged out successfully.')
+    return redirect('home')
 
 #Menu view
 def menu_view(request):
@@ -97,5 +126,10 @@ def menu_view(request):
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     return render(request, 'bookings/menu.html', {'meals': page_obj})
+
+# Contact view
+def contact_view(request):
+    return render(request, 'bookings/contact.html')
+
 
 

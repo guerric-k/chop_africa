@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>Dashboard Overview</h1>
+    <p>Total Reservations: {{ total_reservations }}</p>
+    <p>Total Users: {{ total_users }}</p>
+
+    <a href="{% url 'dashboard_reservations' %}">View Reservations</a><br>
+    <a href="{% url 'dashboard_meals' %}">View Meals</a><br>
+    <a href="{% url 'dashboard_users' %}">View Users</a>
+{% endblock %}

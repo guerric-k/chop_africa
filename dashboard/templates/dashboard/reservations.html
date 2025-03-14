@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>Reservations</h1>
+    <ul>
+        {% for reservation in reservations %}
+            <li>
+                {{ reservation.user.username }} - {{ reservation.date }} - {{ reservation.time }}
+            </li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'dashboard' %}">Back to Dashboard</a>
+{% endblock %}

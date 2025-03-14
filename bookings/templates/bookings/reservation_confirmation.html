@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Reservation Confirmation</h2>
+
+    <p>Your reservation has been successfully made!</p>
+
+    <p>Date: {{ reservation.date }}</p>
+    <p>Time: {{ reservation.time }}</p>
+    <p>Guests: {{ reservation.number_of_guests }}</p>
+
+    <a href="{% url 'view_reservations' %}">View My Reservations</a>
+{% endblock %}

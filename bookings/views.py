@@ -140,7 +140,7 @@ def home_view(request):
         {'name': 'Puff Puff', 'description': 'Fried dough', 'image': 'images/puff_puff.jpg'},
         {'name': 'suya', 'Grilled Beef': 'Spicy grilled beef', 'image': 'images/suya.jpg'},
     ]
-    return render(request, 'home.html', {'featured_meals': featured_meals})
+    return render(request, 'bookings/home.html', {'featured_meals': featured_meals})
 
 # Reservation view
 def make_reservation(request):
@@ -163,7 +163,7 @@ def make_reservation(request):
                 messages.error(request, str(e))
     else:
         form = ReservationForm()
-    return render(request, 'make_reservation.html', {'form': form})
+    return render(request, 'bookings/make_reservation.html', {'form': form})
 
 # View reservations view
 def view_reservations(request):
@@ -191,7 +191,7 @@ def modify_reservation(request, reservation_id):
     else:
         form = ReservationForm(instance=reservation)
 
-    return render(request, 'modify_reservation.html', {'form': form, 'reservation': reservation})
+    return render(request, 'bookings/modify_reservation.html', {'form': form, 'reservation': reservation})
 
 # Delete reservation view
 def delete_reservation(request, reservation_id):
@@ -202,5 +202,5 @@ def delete_reservation(request, reservation_id):
         messages.success(request, 'Reservation deleted successfully.')
         return redirect('view_reservations')
 
-    return render(request, 'delete_reservation_confirm.html', {'reservation': reservation})
+    return render(request, 'bookings/delete_reservation_confirm.html', {'reservation': reservation})
 

@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Reservation Details</h2>
+
+    <p><strong>Date:</strong> {{ reservation.date }}</p>
+    <p><strong>Time:</strong> {{ reservation.time }}</p>
+    <p><strong>Guests:</strong> {{ reservation.number_of_guests }}</p>
+    <p><strong>Table:</strong> {{ reservation.table }}</p>
+    <p><strong>Status:</strong> {{ reservation.status }}</p>
+    <p><strong>Special Requests:</strong> {{ reservation.special_requests|default:"None" }}</p>
+    <p><strong>Children:</strong> {% if reservation.has_children %}Yes, {{ reservation.number_of_children }} children{% else %}No{% endif %}</p>
+    <p><strong>Disability Adjustments:</strong> {% if reservation.is_disabled %}{{ reservation.disability_details }}{% else %}None{% endif %}</p>
+    <p><strong>Created At:</strong> {{ reservation.created_at }}</p>
+    <p><strong>Updated At:</strong> {{ reservation.updated_at }}</p>
+
+    <a href="{% url 'modify_reservation' reservation.id %}">Modify</a>
+    <a href="{% url 'delete_reservation' reservation.id %}">Delete</a>
+    <a href="{% url 'view_reservations' %}">Back to Reservations</a>
+{% endblock %}

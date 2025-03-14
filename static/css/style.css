@@ -32,14 +32,13 @@ body {
 .hero-section {
     position: relative;
     height: 500px; /* Adjust as needed */
-    background-image: url('../images/hero-bg.jpg'); /* Replace with your image */
+    background-image: url('../images/hero.jpg'); 
     background-size: cover;
     background-position: center;
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
-    color: white;
 }
 
 .hero-content h1 {

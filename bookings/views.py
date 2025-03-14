@@ -173,7 +173,7 @@ def view_reservations(request):
 
     user = User.objects.get(customer_id=request.session['user_id'])
     reservations = Reservation.objects.filter(user=user)
-    return render(request, 'view_reservations.html', {'reservations': reservations})
+    return render(request, 'bookings/view_reservations.html', {'reservations': reservations})
 
 # Modify reservation view
 def modify_reservation(request, reservation_id):
@@ -191,7 +191,7 @@ def modify_reservation(request, reservation_id):
     else:
         form = ReservationForm(instance=reservation)
 
-    return render(request, 'modify_reservation.html', {'form': form, 'reservation': reservation})
+    return render(request, 'bookings/modify_reservation.html', {'form': form, 'reservation': reservation})
 
 # Delete reservation view
 def delete_reservation(request, reservation_id):
@@ -202,5 +202,5 @@ def delete_reservation(request, reservation_id):
         messages.success(request, 'Reservation deleted successfully.')
         return redirect('view_reservations')
 
-    return render(request, 'delete_reservation_confirm.html', {'reservation': reservation})
+    return render(request, 'bookings/delete_reservation_confirm.html', {'reservation': reservation})
 

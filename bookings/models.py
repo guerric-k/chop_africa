@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 from django.core.exceptions import ValidationError
 import datetime
+from django.contrib.auth.hashers import check_password
 
 # Create your models here.
 
@@ -75,4 +76,26 @@ class Reservation(models.Model):
         # Validate disability information
         if self.is_disabled and not self.disability_details:
             raise ValidationError("Please provide disability accommodation details.")
+
+class User(models.Model):
+    """Model representing a restaurant user."""
+    customer_id = models.AutoField(primary_key=True)
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
+    phone_number = models.CharField(max_length=20)
+    email = models.EmailField(unique=True)
+    username = models.CharField(max_length=50, unique=True)
+    password_hash = models.CharField(max_length=128)
+    has_children = models.BooleanField(default=False)
+    number_of_children = models.IntegerField(null=True, blank=True)
+    is_disabled = models.BooleanField(default=False)
+    disability_adjustments = models.TextField(null=True, blank=True)
+
+    def set_password(self, raw_password):
+        self.password_hash = make_password(raw_password)
     
+    def check_password(self, raw_password):
+        return check_password(raw_password, self.password_hash)
+    
+    def __str__(self):
+        return self.username

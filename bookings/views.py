@@ -51,81 +51,69 @@ def menu_view(request):
     meals = []
 
     # Ekwang
-    meals.extend([
-        {'name': f'Ekwang {i}', 'description': f'A delicious mix of crushed Cocoyams, beef, leaves {i}', 'price': i * 10, 'image': f'images/ekwang{i}.jpeg'}
-        for i in range(1, 12)
-    ])
+    meals.append(
+        {'name': 'Ekwang', 'description': 'A delicious mix of crushed Cocoyams, beef, leaves', 'price': 10, 'image': 'images/ekwang.jpeg'}
+    )
 
     # Ndole
-    meals.extend([
-        {'name': f'Ndole {i}', 'description': f'Bitter leaf stew and boiled plantains with beef and Shrimps {i}', 'price': i * 12, 'image': f'images/ndole{i}.jpg'}
-        for i in range(1, 12)
-    ])
+    meals.append(
+        {'name': 'Ndole', 'description': 'Bitter leaf stew and boiled plantains with beef and Shrimps', 'price': 12, 'image': 'images/ndole.jpg'}
+    )
 
     # Grilled Mackerel
-    meals.extend([
-        {'name': f'Grilled Mackerel {i}', 'description': f'Grilled fish with boiled fermented cassava {i}', 'price': i * 15, 'image': f'images/grilled_mackerel{i}.jpeg'}
-        for i in range(1, 12)
-    ])
+    meals.append(
+        {'name': 'Grilled Mackerel', 'description': 'Grilled fish with boiled fermented cassava', 'price': 15, 'image': 'images/grilled_mackerel.jpeg'}
+    )
 
     # Puff Puff
-    meals.extend([
-        {'name': f'Puff Puff {i}', 'description': f'Fried dough {i}', 'price': i * 5, 'image': f'images/puff_puff{i}.jpg'}
-        for i in range(1, 12)
-    ])
+    meals.append(
+        {'name': 'Puff Puff', 'description': 'Fried dough', 'price': 5, 'image': 'images/puff_puff.jpg'}
+    )
 
     # Suya
-    meals.extend([
-        {'name': f'Suya {i}', 'description': f'Spicy grilled beef {i}', 'price': i * 8, 'image': f'images/suya{i}.jpg'}
-        for i in range(1, 12)
-    ])
+    meals.append(
+        {'name': 'Suya', 'description': 'Spicy grilled beef', 'price': 8, 'image': 'images/suya.jpg'}
+    )
 
     # Akara
-    meals.extend([
-        {'name': f'Akara {i}', 'description': f'Spicy crushed fried beans {i}', 'price': i * 8, 'image': f'images/akara{i}.jpg'}
-        for i in range(1, 12)
-    ])
+    meals.append(
+        {'name': 'Akara', 'description': 'Spicy crushed fried beans', 'price': 8, 'image': 'images/akara.jpg'}
+    )
 
     # Jollof Rice
-    meals.extend([
-        {'name': f'Jollof Rice {i}', 'description': f'Spicy rice with Chicken {i}', 'price': i * 30, 'image': f'images/jollof{i}.jpg'}
-        for i in range(1, 12)
-    ])
+    meals.append(
+        {'name': 'Jollof Rice', 'description': 'Spicy rice with Chicken', 'price': 30, 'image': 'images/jollof.jpg'}
+    )
 
     # Fulere
-    meals.extend([
-        {'name': f'Fulere {i}', 'description': f'Home made drink {i}', 'price': i * 8, 'image': f'images/fulere{i}.jpg'}
-        for i in range(1, 12)
-    ])
+    meals.append(
+        {'name': 'Fulere', 'description': 'Home made drink', 'price': 8, 'image': 'images/fulere.jpg'}
+    )
 
     # Peanut Soup
-    meals.extend([
-        {'name': f'Groundnut Soup {i}', 'description': f'Peanut stew with beef chops {i}', 'price': i * 8, 'image': f'images/groundnut_stew{i}.jpg'}
-        for i in range(1, 12)
-    ])
+    meals.append(
+        {'name': 'Groundnut Soup', 'description': 'Peanut stew with beef chops', 'price': 8, 'image': 'images/groundnut_stew.jpg'}
+    )
 
     #Moin Moin
-    meals.extend([
-        {'name': f'Moin Moin {i}', 'description': f'Steamed beans pudding {i}', 'price': i * 8, 'image': f'images/moin_moin{i}.jpg'}
-        for i in range(1, 12)
-    ])
+    meals.append(
+        {'name': 'Moin Moin', 'description': 'Steamed beans pudding', 'price': 8, 'image': 'images/moin_moi.jpg'}
+    )
 
     #Tiga nut drink
-    meals.extend([
-        {'name': f'Tiga Nut Drink {i}', 'description': f'Juiced Tiga nuts with ice blocks and Dates {i}', 'price': i * 8, 'image': f'images/tiger_nut{i}.jpg'}
-        for i in range(1, 12)
-    ])
-    
+    meals.append(
+        {'name': 'Tiga Nut Drink', 'description': 'Juiced Tiga nuts with ice blocks and Dates', 'price': 8, 'image': 'images/tiger_nut.jpg'}
+    )
+
     #Chapman Drink
-    meals.extend([
-        {'name': f'Chapman Drink {i}', 'description': f'Home made drinks {i}', 'price': i * 8, 'image': f'images/chapman{i}.jpg'} 
-        for i in range(1, 12)
-    ])
+    meals.append(
+        {'name': 'Chapman Drink', 'description': 'Home made drinks', 'price': 8, 'image': 'images/chapman_drink.jpg'}
+    )
 
     paginator = Paginator(meals, 6)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-    return render(request, 'menu.html', {'meals': page_obj})
+    return render(request, 'bookings/menu.html', {'meals': page_obj})
 
 # Contact view
 def contact_view(request):

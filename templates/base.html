@@ -26,50 +26,51 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-transparent border-bottom">
-        <a class="navbar-brand" href="{% url 'home' %}">
-            <img src="{% static 'images/logo.jpg' %}" alt="Logo" width="70" height="70">
-            <span class="d-block">Taste the soul of African cuisine</span>
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item active">
-                    <a class="nav-link" href="{% url 'home' %}">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'menu' %}">Menu</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'contact' %}">Contact</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'make_reservation' %}">Make Reservation</a>
-                </li>
-                {% if request.session.user_id %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'view_reservations' %}">My Reservations</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'logout' %}">Logout</a>
-                </li>
-                {% else %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'login' %}">Login</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'register' %}">Register</a>
-                </li>
-                {% endif %}
-            </ul>
-        </div>
-    </nav>
+    <div class="hero-container">
+        <nav class="navbar navbar-expand-lg  navnar-dark border-bottom">
+            <a class="navbar-brand" href="{% url 'home' %}">
+                <img src="{% static 'images/logo.jpg' %}" alt="Logo" width="70" height="70">
+                <span class="d-block">Taste the soul of African cuisine</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{% url 'home' %}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'menu' %}">Menu</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'contact' %}">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'make_reservation' %}">Make Reservation</a>
+                    </li>
+                    {% if request.session.user_id %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'view_reservations' %}">My Reservations</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'register' %}">Register</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </nav>
 
-    {% block content %}{% endblock %}
-
+        {% block content %}{% endblock %}
+    </div>
     <footer class="footer">
         <p>&copy; 2024 Chop Africa by Nsosah Guerric</p>
         <div class="social-icons">

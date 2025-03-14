@@ -8,7 +8,7 @@
         {% for meal in meals %}
         <div class="col-md-6 col-lg-4 mb-4 menu-item">
             <div class="menu-item-image">
-                <img src="{{ meal.image.url }}" alt="{{ meal.name }}" class="img-fluid rounded">
+                <img src="{% static meal.image %}" alt="{{ meal.name }}" class="img-fluid rounded">
             </div>
             <h3>{{ meal.name }}</h3>
             <p>{{ meal.description }}</p>

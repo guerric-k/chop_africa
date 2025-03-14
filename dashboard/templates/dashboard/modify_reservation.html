@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>Modify Reservation</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Update Reservation</button>
+    </form>
+    <a href="{% url 'dashboard_reservations' %}">Back to Reservations</a>
+{% endblock %}

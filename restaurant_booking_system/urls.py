@@ -22,6 +22,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('bookings.urls')), # Include bookings urls.
+    path('dashboard/', include('dashboard.urls')), # Include dashboard app urls.
 ]
 
 if settings.DEBUG:

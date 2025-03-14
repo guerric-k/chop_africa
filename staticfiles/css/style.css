@@ -5,29 +5,17 @@ body {
 }
 
 :root {
+    --form-background-color: #a5aceb;
     --primary-color: #583023;
-    --secondary-color: #af9d9a;
-    --accent-color: #f8f9fa;
+    --secondary-color: #6a5ca5;
+    --accent-color: #bbbec0;
     --dark-color: #212121;
     --light-color: #f8f9fa;
 }
 
 /* Navbar Styles */
-.navbar-nav .nav-link {
-    color: var(--light-color); 
-    font-weight: bold;
-    transition: 0.5s;
-    background: var(--hero-image);
-}
-
-.navbar-dark .navbar-brand img {
-    margin-right: 10px;
-}
-
-.navbar-dark .navbar-brand span {
-    font-size: 0.8em;
-    display: block;
-    color: white; /* Added to brand span */
+.navbar-toggler {
+    border: 1px solid white; /* Or any other color */
 }
 
 /* Hero Section Styles */
@@ -168,4 +156,44 @@ body {
 
 .menu-page .menu-item-image img:hover {
     transform: scale(1.1);
+}
+
+
+/* Basic form styling */
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.btn-block {
+    display: block;
+    width: 100%;
+}
+
+/* Card styling */
+.card {
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 0.25rem;
+    background-color: var(--form-background-color);
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+.card-body {
+    padding: 2rem;
+}
+
+/* Error message styling */
+.alert {
+    margin-bottom: 15px;
 }

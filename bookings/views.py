@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.core.paginator import Paginator
 from django.utils import timezone
 from .forms import UserRegistrationForm, LoginForm, ReservationForm
+from django.contrib.auth import authenticate, login
 
 # Register view
 def register_view(request):
@@ -25,19 +26,19 @@ def login_view(request):
         if form.is_valid():
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
-            try:
-                user = User.objects.get(username=username)
-                if user.check_password(password):
-                    request.session['user_id'] = user.customer_id
-                    messages.success(request, 'Login successful!')
-                    return redirect('home')
-                else:
-                    messages.error(request, 'Invalid password.')
-            except User.DoesNotExist:
-                messages.error(request, 'User not found.')
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                messages.success(request, 'Logged in successfully.')
+                return redirect('home')
+            else:
+                messages.error(request, 'Invalid username or password.')
+        else:
+            messages.error(request, 'invalid form data.')
     else:
         form = LoginForm()
     return render(request, 'bookings/login.html', {'form': form})
+
 
 # Logout view
 def logout_view(request):
@@ -62,52 +63,52 @@ def menu_view(request):
 
     # Grilled Mackerel
     meals.append(
-        {'name': 'Grilled Mackerel', 'description': 'Grilled fish with boiled fermented cassava', 'price': 15, 'image': 'images/grilled_mackerel.jpeg'}
+        {'name': 'Grilled Mackerel', 'description': 'Grilled fish with boiled fermented cassava', 'price': 1500, 'image': 'images/grilled_mackerel.jpeg'}
     )
 
     # Puff Puff
     meals.append(
-        {'name': 'Puff Puff', 'description': 'Fried dough', 'price': 5, 'image': 'images/puff_puff.jpg'}
+        {'name': 'Puff Puff', 'description': 'Fried dough', 'price': 5000, 'image': 'images/puff_puff.jpg'}
     )
 
     # Suya
     meals.append(
-        {'name': 'Suya', 'description': 'Spicy grilled beef', 'price': 8, 'image': 'images/suya.jpg'}
+        {'name': 'Suya', 'description': 'Spicy grilled beef', 'price': 800, 'image': 'images/suya.jpg'}
     )
 
     # Akara
     meals.append(
-        {'name': 'Akara', 'description': 'Spicy crushed fried beans', 'price': 8, 'image': 'images/akara.jpg'}
+        {'name': 'Akara', 'description': 'Spicy crushed fried beans', 'price': 800, 'image': 'images/akara.jpg'}
     )
 
     # Jollof Rice
     meals.append(
-        {'name': 'Jollof Rice', 'description': 'Spicy rice with Chicken', 'price': 30, 'image': 'images/jollof.jpg'}
+        {'name': 'Jollof Rice', 'description': 'Spicy rice with Chicken', 'price': 3000, 'image': 'images/jollof.jpg'}
     )
 
     # Fulere
     meals.append(
-        {'name': 'Fulere', 'description': 'Home made drink', 'price': 8, 'image': 'images/fulere.jpg'}
+        {'name': 'Fulere', 'description': 'Home made drink', 'price': 850, 'image': 'images/fulere.jpg'}
     )
 
     # Peanut Soup
     meals.append(
-        {'name': 'Groundnut Soup', 'description': 'Peanut stew with beef chops', 'price': 8, 'image': 'images/groundnut_stew.jpg'}
+        {'name': 'Groundnut Soup', 'description': 'Peanut stew with beef chops', 'price': 800, 'image': 'images/groundnut_stew.jpg'}
     )
 
     #Moin Moin
     meals.append(
-        {'name': 'Moin Moin', 'description': 'Steamed beans pudding', 'price': 8, 'image': 'images/moin_moi.jpg'}
+        {'name': 'Moin Moin', 'description': 'Steamed beans pudding', 'price': 1000, 'image': 'images/moin_moi.jpg'}
     )
 
     #Tiga nut drink
     meals.append(
-        {'name': 'Tiga Nut Drink', 'description': 'Juiced Tiga nuts with ice blocks and Dates', 'price': 8, 'image': 'images/tiger_nut.jpg'}
+        {'name': 'Tiga Nut Drink', 'description': 'Juiced Tiga nuts with ice blocks and Dates', 'price': 900, 'image': 'images/tiger_nut.jpg'}
     )
 
     #Chapman Drink
     meals.append(
-        {'name': 'Chapman Drink', 'description': 'Home made drinks', 'price': 8, 'image': 'images/chapman_drink.jpg'}
+        {'name': 'Chapman Drink', 'description': 'Home made drinks', 'price': 800, 'image': 'images/chapman_drink.jpg'}
     )
 
     paginator = Paginator(meals, 6)

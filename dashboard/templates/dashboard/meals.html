@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <h1>Meals</h1>
+    <ul>
+        {% for meal in meals %}
+            <li>
+                {{ meal.name }} - {{ meal.description }} - Price: ${{ meal.price }}
+                <img src="{% static meal.image %}" alt="{{ meal.name }}" width="100">
+            </li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'dashboard' %}">Back to Dashboard</a>
+{% endblock %}

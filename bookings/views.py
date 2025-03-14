@@ -165,5 +165,42 @@ def make_reservation(request):
         form = ReservationForm()
     return render(request, 'bookings/make_reservation.html', {'form': form})
 
+# View reservations view
+def view_reservations(request):
+    if 'user_id' not in request.session:
+        messages.error(request, 'You must be logged in to view reservations.')
+        return redirect('login')
 
+    user = User.objects.get(customer_id=request.session['user_id'])
+    reservations = Reservation.objects.filter(user=user)
+    return render(request, 'view_reservations.html', {'reservations': reservations})
+
+# Modify reservation view
+def modify_reservation(request, reservation_id):
+    reservation = get_object_or_404(Reservation, pk=reservation_id, user__customer_id=request.session.get('user_id'))
+
+    if request.method == 'POST':
+        form = ReservationForm(request.POST, instance=reservation)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Reservation updated successfully.')
+            return redirect('view_reservations')
+        else:
+            messages.error(request, 'Please correct the errors below.')
+
+    else:
+        form = ReservationForm(instance=reservation)
+
+    return render(request, 'modify_reservation.html', {'form': form, 'reservation': reservation})
+
+# Delete reservation view
+def delete_reservation(request, reservation_id):
+    reservation = get_object_or_404(Reservation, pk=reservation_id, user__customer_id=request.session.get('user_id'))
+
+    if request.method == 'POST':
+        reservation.delete()
+        messages.success(request, 'Reservation deleted successfully.')
+        return redirect('view_reservations')
+
+    return render(request, 'delete_reservation_confirm.html', {'reservation': reservation})
 

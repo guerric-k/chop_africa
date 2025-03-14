@@ -3,7 +3,7 @@
 
 {% block content %}
 <div class="container mt-5">
-    <h2>Make a Reservation</h2>
+    <h2>Modify Reservation</h2>
     {% if messages %}
         {% for message in messages %}
             <div class="alert alert-{{ message.tags }}">{{ message }}</div>
@@ -12,7 +12,7 @@
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Make Reservation</button>
+        <button type="submit" class="btn btn-primary">Update Reservation</button>
     </form>
 </div>
 {% endblock %}

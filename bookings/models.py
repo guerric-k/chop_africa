@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 from django.core.exceptions import ValidationError
 import datetime
-from django.contrib.auth.hashers import check_password
+from django.contrib.auth.hashers import check_password, make_password
 
 # Create your models here.
 
@@ -90,12 +90,13 @@ class User(models.Model):
     number_of_children = models.IntegerField(null=True, blank=True)
     is_disabled = models.BooleanField(default=False)
     disability_adjustments = models.TextField(null=True, blank=True)
+    last_login = models.DateTimeField(null=True, blank=True) 
 
     def set_password(self, raw_password):
         self.password_hash = make_password(raw_password)
-    
+
     def check_password(self, raw_password):
         return check_password(raw_password, self.password_hash)
-    
+
     def __str__(self):
         return self.username

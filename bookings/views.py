@@ -6,6 +6,9 @@ from django.core.paginator import Paginator
 from django.utils import timezone
 from .forms import UserRegistrationForm, LoginForm, ReservationForm
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
+from django.core.exceptions import ValidationError
+
 
 # Register view
 def register_view(request):
@@ -132,17 +135,13 @@ def home_view(request):
     return render(request, 'bookings/home.html', {'featured_meals': featured_meals})
 
 # Reservation view
+@login_required
 def make_reservation(request):
-    if 'user_id' not in request.session:
-        messages.error(request, 'You must be logged in to make a reservation.')
-        return redirect('login')
-
-    user = User.objects.get(customer_id=request.session['user_id'])
     if request.method == 'POST':
         form = ReservationForm(request.POST)
         if form.is_valid():
             reservation = form.save(commit=False)
-            reservation.user = user
+            reservation.user = request.user 
             try:
                 reservation.clean()
                 reservation.save()
@@ -152,21 +151,22 @@ def make_reservation(request):
                 messages.error(request, str(e))
     else:
         form = ReservationForm()
+        # Filter available tables
+        available_tables = Table.objects.all()  # Add filters here based on date, time, and number of guests.
+        form.fields['table'].queryset = available_tables
+
     return render(request, 'bookings/make_reservation.html', {'form': form})
 
 # View reservations view
+@login_required
 def view_reservations(request):
-    if 'user_id' not in request.session:
-        messages.error(request, 'You must be logged in to view reservations.')
-        return redirect('login')
-
-    user = User.objects.get(customer_id=request.session['user_id'])
-    reservations = Reservation.objects.filter(user=user)
-    return render(request, 'view_reservations.html', {'reservations': reservations})
+    reservations = Reservation.objects.filter(user=request.user) #use request.user
+    return render(request, 'bookings/view_reservations.html', {'reservations': reservations})
 
 # Modify reservation view
+@login_required
 def modify_reservation(request, reservation_id):
-    reservation = get_object_or_404(Reservation, pk=reservation_id, user__customer_id=request.session.get('user_id'))
+    reservation = get_object_or_404(Reservation, pk=reservation_id, user=request.user)
 
     if request.method == 'POST':
         form = ReservationForm(request.POST, instance=reservation)
@@ -183,8 +183,9 @@ def modify_reservation(request, reservation_id):
     return render(request, 'bookings/modify_reservation.html', {'form': form, 'reservation': reservation})
 
 # Delete reservation view
+@login_required
 def delete_reservation(request, reservation_id):
-    reservation = get_object_or_404(Reservation, pk=reservation_id, user__customer_id=request.session.get('user_id'))
+    reservation = get_object_or_404(Reservation, pk=reservation_id, user=request.user)
 
     if request.method == 'POST':
         reservation.delete()
@@ -193,3 +194,7 @@ def delete_reservation(request, reservation_id):
 
     return render(request, 'bookings/delete_reservation_confirm.html', {'reservation': reservation})
 
+@login_required
+def user_dashboard_view(request):
+    reservations = Reservation.objects.filter(user=request.user)
+    return render(request, 'bookings/user_dashboard.html', {'reservations': reservations})

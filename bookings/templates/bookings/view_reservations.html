@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>My Reservations</h2>
+    {% if reservations %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Table</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Guests</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for reservation in reservations %}
+                    <tr>
+                        <td>{{ reservation.table }}</td>
+                        <td>{{ reservation.date }}</td>
+                        <td>{{ reservation.time }}</td>
+                        <td>{{ reservation.number_of_guests }}</td>
+                        <td>{{ reservation.status }}</td>
+                        <td>
+                            <a href="{% url 'modify_reservation' reservation.pk %}" class="btn btn-sm btn-primary">Modify</a>
+                            <a href="{% url 'delete_reservation' reservation.pk %}" class="btn btn-sm btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>You have no reservations.</p>
+    {% endif %}
+</div>
+{% endblock %}

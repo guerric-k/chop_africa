@@ -1,4 +1,3 @@
-# bookings/backends.py
 from django.contrib.auth.backends import ModelBackend
 from .models import User
 
@@ -16,3 +15,6 @@ class CustomUserBackend(ModelBackend):
             return User.objects.get(pk=user_id)
         except User.DoesNotExist:
             return None
+
+    def update_last_login(self, user):
+        pass

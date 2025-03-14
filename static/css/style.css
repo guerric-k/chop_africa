@@ -123,3 +123,38 @@ body {
     color: var(--dark-color);
     font-size: 1.5em;
 }
+
+/* Login/Register Page Styles */
+
+.login-page, .register-page {
+    width: 300px;
+    margin: 50px auto;
+}
+
+.login-page .form-group label, .register-page .form-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+/* Menu Page Styles */
+.menu-page {
+    padding: 50px 0;
+}
+
+.menu-page .menu-item {
+    text-align: center;
+}
+
+.menu-page .menu-item-image {
+    overflow: hidden;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.menu-page .menu-item-image img {
+    transition: transform 0.3s ease;
+}
+
+.menu-page .menu-item-image img:hover {
+    transform: scale(1.1);
+}

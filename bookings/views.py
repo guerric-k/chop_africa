@@ -6,17 +6,17 @@ from django.core.paginator import Paginator
 from django.utils import timezone
 from .forms import UserRegistrationForm, LoginForm, ReservationForm
 
-# Create your views here.
-# Home view
-def home_view(request):
-    featured_meals = [
-        {'name': 'Ekwang', 'description': 'A delicious mix of crushed Cocoyams, beef, leaves and fish', 'image': 'images/ekwang.jpeg'},
-        {'name': 'Ndole', 'description': 'Bitter leaf stew and boiled plantains', 'image': 'images/ndole.jpg'},
-        {'name': 'Grilled Mackerel', 'description': 'Grilled fish with boiled fermented cassava', 'image': 'images/grilled_mackerel.jpeg'},
-        {'name': 'Puff Puff', 'description': 'Fried dough', 'image': 'images/puff_puff.jpg'},
-        {'name': 'suya', 'Grilled Beef': 'Spicy grilled beef', 'image': 'images/suya.jpg'},
-    ]
-    return render(request, 'bookings/home.html', {'featured_meals': featured_meals})
+# Register view
+def register_view(request):
+    if request.method == 'POST':
+        form = UserRegistrationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            messages.success(request, 'Registration successful!')
+            return redirect('login')
+    else:
+        form = UserRegistrationForm()
+    return render(request, 'bookings/register.html', {'form': form})
 
 # Login view
 def login_view(request):
@@ -130,6 +130,40 @@ def menu_view(request):
 # Contact view
 def contact_view(request):
     return render(request, 'bookings/contact.html')
+
+# Home view
+def home_view(request):
+    featured_meals = [
+        {'name': 'Ekwang', 'description': 'A delicious mix of crushed Cocoyams, beef, leaves and fish', 'image': 'images/ekwang.jpeg'},
+        {'name': 'Ndole', 'description': 'Bitter leaf stew and boiled plantains', 'image': 'images/ndole.jpg'},
+        {'name': 'Grilled Mackerel', 'description': 'Grilled fish with boiled fermented cassava', 'image': 'images/grilled_mackerel.jpeg'},
+        {'name': 'Puff Puff', 'description': 'Fried dough', 'image': 'images/puff_puff.jpg'},
+        {'name': 'suya', 'Grilled Beef': 'Spicy grilled beef', 'image': 'images/suya.jpg'},
+    ]
+    return render(request, 'bookings/home.html', {'featured_meals': featured_meals})
+
+# Reservation view
+def make_reservation(request):
+    if 'user_id' not in request.session:
+        messages.error(request, 'You must be logged in to make a reservation.')
+        return redirect('login')
+
+    user = User.objects.get(customer_id=request.session['user_id'])
+    if request.method == 'POST':
+        form = ReservationForm(request.POST)
+        if form.is_valid():
+            reservation = form.save(commit=False)
+            reservation.user = user
+            try:
+                reservation.clean()
+                reservation.save()
+                messages.success(request, 'Reservation successful!')
+                return redirect('view_reservations')
+            except ValidationError as e:
+                messages.error(request, str(e))
+    else:
+        form = ReservationForm()
+    return render(request, 'bookings/make_reservation.html', {'form': form})
 
 
 

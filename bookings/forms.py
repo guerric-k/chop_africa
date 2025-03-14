@@ -4,11 +4,13 @@ from django.utils import timezone
 from django.contrib.auth.hashers import make_password
 from .models import Table, Reservation, User  # Imports the Table and Reservation models from the models.py file.
 
+#TableForm class
 class TableForm(forms.ModelForm):
     class Meta:
         model = Table
         fields = ['number', 'capacity', 'location']
 
+#ReservationForm class
 class ReservationForm(forms.ModelForm):
     class Meta:
         model = Reservation
@@ -37,6 +39,7 @@ class ReservationForm(forms.ModelForm):
 
         return cleaned_data
 
+#UserRegistrationForm class
 class UserRegistrationForm(forms.ModelForm):
     password2 = forms.CharField(widget=forms.PasswordInput, label="Confirm Password")
 
@@ -64,6 +67,7 @@ class UserRegistrationForm(forms.ModelForm):
             user.save()
         return user
 
+#LoginForm class
 class LoginForm(forms.Form):
     username = forms.CharField(max_length=50)
     password = forms.CharField(widget=forms.PasswordInput)
